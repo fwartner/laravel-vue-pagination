@@ -12,5 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $persons = \App\Person::paginate(5);
+
+    return \App\Http\Resources\PersonResource::collection($persons);
+});
+
+Route::get('{id}', function ($id) {
+    $person = \App\Person::find($id);
+
+    return \App\Http\Resources\PersonResource::make($person);
 });
